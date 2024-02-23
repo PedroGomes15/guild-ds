@@ -1,0 +1,27 @@
+<section>
+  <mat-card>
+    <mat-card-content>
+      <form class="form-container" [formGroup]="memberForm">
+        <div class="input-group">
+          <mat-form-field class="form-field">
+            <mat-label>Nome</mat-label>
+            <input
+              matInput
+              formControlName="name"
+              placeholder="Ex. José pé de Ferro"
+            />
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Descrição</mat-label>
+            <textarea
+              matInput
+              formControlName="description"
+              placeholder="Ex. José pé de Ferro"
+            ></textarea>
+          </mat-form-field>
+        </div>
+        <input-image-picker />
+      </form>
+    </mat-card-content>
+  </mat-card>
+</section>
