@@ -1,10 +1,15 @@
 <mat-card class="input-image-card" (click)="HandleUpload()">
   <mat-card-content>
+    @if(imageUploaded){
+    <img src="{{ imageUploaded }}" />
+    } @else{
     <mat-icon
       aria-hidden="false"
       aria-label="Example home icon"
       fontIcon="add_photo_alternate"
       class="input-icon"
     ></mat-icon>
+    }
   </mat-card-content>
+  <input type="file" id="imgupload" style="display: none" #inputImage />
 </mat-card>
