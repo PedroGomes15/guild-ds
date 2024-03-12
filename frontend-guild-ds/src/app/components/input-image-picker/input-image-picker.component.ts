@@ -1,4 +1,12 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  ElementRef,
+  ViewChild,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { FileUploaderService } from '../../services/file-uploader.service';
@@ -12,9 +20,11 @@ import { FileUploaderService } from '../../services/file-uploader.service';
   styleUrl: './input-image-picker.component.scss',
 })
 export class InputImagePickerComponent implements AfterViewInit {
-  imageUploaded: String = '';
-
   @ViewChild('inputImage') inputElement: ElementRef | undefined;
+
+  @Output() imagePath = new EventEmitter<string>();
+
+  imageUploaded: String = '';
 
   constructor(private fileUploaderService: FileUploaderService) {}
 
@@ -45,6 +55,7 @@ export class InputImagePickerComponent implements AfterViewInit {
       next: (path: String) => {
         console.log('Finalizaou o upload no path ', path);
         this.imageUploaded = path;
+        this.imagePath.emit(path.toString());
       },
       error: (error) => {
         console.error('Erro ao fazer upload do arquivo:', error);

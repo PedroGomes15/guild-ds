@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("members")
@@ -23,8 +24,14 @@ public class MembersController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
-    public void createMember(@RequestBody MembersDTO data){
-        Members memberData = new Members(data);
-        repository.save(memberData);
+    public Long createMember(@RequestBody MembersDTO data){
+        Members memberData = repository.save(new Members(data));
+        return memberData.getId();
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping
+    public void deleteMember(@RequestParam String id){
+        repository.deleteById(Long.parseLong(id));
     }
 }

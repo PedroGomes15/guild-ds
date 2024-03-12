@@ -2,26 +2,47 @@
   <mat-card>
     <mat-card-content>
       <form class="form-container" [formGroup]="memberForm">
-        <div class="input-group">
-          <mat-form-field class="form-field">
-            <mat-label>Nome</mat-label>
-            <input
-              matInput
-              formControlName="name"
-              placeholder="Ex. José pé de Ferro"
-            />
-          </mat-form-field>
-          <mat-form-field class="form-field">
-            <mat-label>Descrição</mat-label>
-            <textarea
-              matInput
-              formControlName="description"
-              placeholder="Ex. José pé de Ferro"
-            ></textarea>
-          </mat-form-field>
+        <div class="input-group-container">
+          <div class="input-group-fields">
+            <mat-form-field class="form-field">
+              <mat-label>Nome</mat-label>
+              <input
+                matInput
+                formControlName="name"
+                placeholder="Ex. José pé de Ferro"
+              />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Descrição</mat-label>
+              <textarea
+                matInput
+                formControlName="description"
+                placeholder="Ex. Guerreiro condecorado"
+              ></textarea>
+            </mat-form-field>
+          </div>
+          <input-image-picker (imagePath)="uploadImagePath($event)" />
         </div>
-        <input-image-picker />
+        <button
+          mat-raised-button
+          color="primary"
+          disabled="{{ !memberForm.valid }}"
+          (click)="submit()"
+        >
+          Criar
+        </button>
       </form>
     </mat-card-content>
   </mat-card>
+  <section class="member-vizualization">
+    <div *ngFor="let member of members">
+      <app-card
+        name="{{ member.name }}"
+        description="{{ member.description }}"
+        img="{{ member.img }}"
+        id="{{ member.id }}"
+        (onDelete)="updateMembers()"
+      ></app-card>
+    </div>
+  </section>
 </section>

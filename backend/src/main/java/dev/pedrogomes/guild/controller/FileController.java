@@ -1,6 +1,8 @@
 package dev.pedrogomes.guild.controller;
 
 import dev.pedrogomes.guild.dto.FileDTO;
+import dev.pedrogomes.guild.utils.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -17,6 +19,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("files")
 public class FileController {
+
     private static final String UPLOAD_DIR = "./src/assets/files/";
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -39,16 +42,11 @@ public class FileController {
                 outputStream.write(file.getBytes());
             }
 
-            // Crie a URL base usando ServletUriComponentsBuilder
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/assets/files/")
-                    .path(fileName)
-                    .toUriString();
-
-            return ResponseEntity.ok(fileDownloadUri);
+            return ResponseEntity.ok(FileUtils.FixPath(fileName));
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Erro ao fazer upload do arquivo");
         }
     }
+
 
 }
